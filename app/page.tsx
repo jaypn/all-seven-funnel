@@ -1,4 +1,5 @@
 "use client";
+import Script from "next/script";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "next-sanity";
@@ -312,10 +313,37 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Google Reviews */}
+<section className="border-t bg-gray-50 py-16">
+<div className="mx-auto w-full max-w-6xl px-4">
+
+<h2 className="text-3xl font-bold text-center mb-10">
+What Our Customers Say
+</h2>
+
+<Script
+src="https://elfsightcdn.com/platform.js"
+strategy="lazyOnload"
+/>
+
+<div
+className="elfsight-app-a1b5eabe-18b4-4e88-8fe3-bb656dc92001"
+data-elfsight-app-lazy
+></div>
+
+</div>
+</section>
+
       {/* Footer */}
       <footer className="border-t bg-white">
-        <div className="mx-auto w-full max-w-6xl px-4 py-6 text-sm text-gray-600">
-          © {new Date().getFullYear()} All Seven Concrete Ltd
+        <div className="mx-auto w-full max-w-6xl px-4 py-6 text-sm text-gray-600 flex justify-between items-center">
+         <span> © {new Date().getFullYear()} All Seven Concrete Ltd </span>
+         < a
+         href="https://allsevenconcrete-admin.sanity.studio"
+         target="_black"
+         rel="noopener noreferrer"
+         className="text-xs text gray-400 hover:text-gray-600"
+         > Admin Sign In</a>
         </div>
       </footer>
     </div>
