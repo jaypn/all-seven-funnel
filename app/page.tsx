@@ -318,7 +318,6 @@ export default function Page() {
 <div className="mx-auto w-full max-w-6xl px-4">
 
 <h2 className="text-3xl font-bold text-center mb-10">
-What Our Customers Say
 </h2>
 
 <Script
