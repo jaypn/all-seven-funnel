@@ -111,7 +111,7 @@ export default function Page() {
 
               <a
                 className="rounded-md border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-800 hover:bg-gray-50"
-                href="tel:+17800000000"
+                href="tel:+17809329317"
               >
                 Call (780) 932-9317
               </a>
