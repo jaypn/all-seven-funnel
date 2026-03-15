@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               {/* Phone + Email (same line) */}
               <div className="hidden md:flex items-center gap-4 text-sm">
                 <a
-                  href="tel:+17800000000"
+                  href="tel:+17809329317"
                   className="font-semibold text-gray-900 hover:text-red-600 transition"
                 >
                   (780) 932-9317
