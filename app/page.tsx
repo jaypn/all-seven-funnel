@@ -156,7 +156,7 @@ export default function Page() {
             <p className="text-sm text-gray-600 mt-1">Tell us what you need — we’ll reply quickly.</p>
 
             <form
-  action="https://formspree.io/f/mdalypkn"
+  action="https://formspree.io/f/xbdzaggv"
   method="POST"
   className="mt-5 grid gap-4"
 >
@@ -225,7 +225,7 @@ export default function Page() {
   <input
     type="hidden"
     name="_redirect"
-    value="https://allsevenconcreteltd.com/?sent=1"
+    value="https://allsevenconcrete.com/?sent=1"
   />
 
   <button
