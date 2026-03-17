@@ -39,8 +39,21 @@ export default function Page() {
       { id: "driveways", title: "Driveways", desc: "New pours, replacement, and repairs." },
       { id: "sidewalks", title: "Sidewalks", desc: "Sidewalks, steps, and small flatwork." },
       { id: "garage-pads", title: "Garage Pads", desc: "Strong base + reinforced concrete pads." },
-    ],
-    []
+      { id:"detached-garage",title:"Detached Garage", desc:"Solution for your Parking"},
+      {id:"patios",title:"Patios", desc:"Great Patios"},
+      {id:"Slabs",title:"Slabs", desc:"Slabs"},
+      {id:"garage-floor",title:"Garage Floor", desc:"Garage Floor"},
+      {id:"pads",title:"Pads", desc:"Pads"},
+      {id:"basements",title:"Basements", desc:"basements"},
+      {id:"exposed-concrete",title:"Exposed Concrete", desc:"Great Gesign"},
+      {id:"Commercials",title:"Commercials", desc:"Commercial areas"},
+      {id:"parking",title:"Parking", desc:"Parking"},
+      {id:"Replacement",title:"Replacement", desc:"Replacement"},
+      {id:"Epoxy",title:"Epoxy", desc:"epoxy"},
+      {id:"repairs",title:"Repairs", desc:"All types of concrete repairs"},
+      {id:"detached-garage",title:"Detached Garage", desc:"Solution for your Parking"},
+    ]
+    
   );
 
   const [selectedService, setSelectedService] = useState<string>("");
