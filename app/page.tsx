@@ -59,6 +59,8 @@ const services: Service[] = useMemo(
 const [selectedService, setSelectedService] = useState<string>("");
 const [projects, setProjects] = useState<Project[]>([]);
 const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
+const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+const [zoom, setZoom] = useState<number>(1);
 
 useEffect(() => {
 client
@@ -77,6 +79,18 @@ afterImage
 .finally(() => setLoadingProjects(false));
 }, []);
 
+useEffect(() => {
+const onKeyDown = (e: KeyboardEvent) => {
+if (e.key === "Escape") {
+setLightbox(null);
+setZoom(1);
+}
+};
+
+window.addEventListener("keydown", onKeyDown);
+return () => window.removeEventListener("keydown", onKeyDown);
+}, []);
+
 const scrollTo = (id: string) => {
 const el = document.getElementById(id);
 if (!el) return;
@@ -90,6 +104,16 @@ setTimeout(() => {
 const select = document.getElementById("service") as HTMLSelectElement | null;
 select?.focus();
 }, 350);
+};
+
+const openLightbox = (src: string, alt: string) => {
+setLightbox({ src, alt });
+setZoom(1);
+};
+
+const closeLightbox = () => {
+setLightbox(null);
+setZoom(1);
 };
 
 return (
@@ -296,26 +320,53 @@ No projects yet. Create and <b>Publish</b> a Project in Sanity Studio.
 <div className="font-semibold">{p.title}</div>
 {p.location && <div className="text-sm text-gray-600">{p.location}</div>}
 {p.description && (
-<div className="text-sm text-gray-600 mt-2">{p.description}</div>
+<div
+className="mt-2 text-sm leading-5 text-gray-600 min-h-[6.25rem]"
+title={p.description}
+style={{
+display: "-webkit-box",
+WebkitLineClamp: 5,
+WebkitBoxOrient: "vertical",
+overflow: "hidden",
+}}
+>
+{p.description}
+</div>
 )}
 
 {p.beforeImage && p.afterImage && (
 <div className="mt-4 grid gap-3 sm:grid-cols-2">
 <div>
 <div className="text-xs text-gray-600 mb-1">Before</div>
+<button
+type="button"
+onClick={() =>
+openLightbox(urlFor(p.beforeImage).width(1600).url(), `${p.title} - Before`)
+}
+className="block w-full"
+>
 <img
 src={urlFor(p.beforeImage).width(900).url()}
-className="h-40 w-full rounded-lg object-cover"
+className="h-40 w-full rounded-lg object-cover hover:opacity-90 transition"
 alt="Before"
 />
+</button>
 </div>
 <div>
 <div className="text-xs text-gray-600 mb-1">After</div>
+<button
+type="button"
+onClick={() =>
+openLightbox(urlFor(p.afterImage).width(1600).url(), `${p.title} - After`)
+}
+className="block w-full"
+>
 <img
 src={urlFor(p.afterImage).width(900).url()}
-className="h-40 w-full rounded-lg object-cover"
+className="h-40 w-full rounded-lg object-cover hover:opacity-90 transition"
 alt="After"
 />
+</button>
 </div>
 </div>
 )}
@@ -352,6 +403,58 @@ Click to request a quote →
 </div>
 </div>
 </section>
+
+{lightbox && (
+<div className="fixed inset-0 z-50 bg-black/80 p-4" onClick={closeLightbox}>
+<div
+className="mx-auto flex h-full w-full max-w-5xl flex-col"
+onClick={(e) => e.stopPropagation()}
+>
+<div className="mb-3 flex items-center justify-between text-white">
+<div className="text-sm">{lightbox.alt}</div>
+<div className="flex items-center gap-2">
+<button
+type="button"
+onClick={() => setZoom((z) => Math.max(1, z - 0.25))}
+className="rounded border border-white/40 px-3 py-1 text-sm"
+>
+-
+</button>
+<button
+type="button"
+onClick={() => setZoom((z) => Math.min(4, z + 0.25))}
+className="rounded border border-white/40 px-3 py-1 text-sm"
+>
++
+</button>
+<button
+type="button"
+onClick={() => setZoom(1)}
+className="rounded border border-white/40 px-3 py-1 text-sm"
+>
+Reset
+</button>
+<button
+type="button"
+onClick={closeLightbox}
+className="rounded border border-white/40 px-3 py-1 text-sm"
+>
+Close
+</button>
+</div>
+</div>
+
+<div className="flex-1 overflow-auto rounded-lg bg-black/40 p-3">
+<img
+src={lightbox.src}
+alt={lightbox.alt}
+className="mx-auto h-auto max-w-none transition-transform duration-150"
+style={{ transform: `scale(${zoom})`, transformOrigin: "center top" }}
+/>
+</div>
+</div>
+</div>
+)}
 
 {/* Google Reviews */}
 <section className="border-t bg-gray-50 py-16">
