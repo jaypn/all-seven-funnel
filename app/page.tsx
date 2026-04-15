@@ -175,7 +175,8 @@ Call (780) 932-9317
 </a>
 </div>
 
-{/* Static Before/After */}
+{/* Static Before/After (temporarily hidden) */}
+{/*
 <div className="mt-8">
 <div className="text-sm font-semibold mb-2">Before &amp; After</div>
 <div className="grid gap-3 sm:grid-cols-2">
@@ -206,6 +207,7 @@ sizes="(max-width: 640px) 100vw, 50vw"
 </div>
 </div>
 </div>
+*/}
 </div>
 
 {/* RIGHT: Quote form */}
