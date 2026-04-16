@@ -61,6 +61,7 @@ const [projects, setProjects] = useState<Project[]>([]);
 const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
 const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 const [zoom, setZoom] = useState<number>(1);
+const [descriptionModal, setDescriptionModal] = useState<{ title: string; text: string } | null>(null);
 
 useEffect(() => {
 client
@@ -84,6 +85,7 @@ const onKeyDown = (e: KeyboardEvent) => {
 if (e.key === "Escape") {
 setLightbox(null);
 setZoom(1);
+setDescriptionModal(null);
 }
 };
 
@@ -114,6 +116,14 @@ setZoom(1);
 const closeLightbox = () => {
 setLightbox(null);
 setZoom(1);
+};
+
+const openDescription = (title: string, text: string) => {
+setDescriptionModal({ title, text });
+};
+
+const closeDescription = () => {
+setDescriptionModal(null);
 };
 
 return (
@@ -322,18 +332,25 @@ No projects yet. Create and <b>Publish</b> a Project in Sanity Studio.
 <div className="font-semibold">{p.title}</div>
 {p.location && <div className="text-sm text-gray-600">{p.location}</div>}
 {p.description && (
+<>
 <div
-className="mt-2 text-sm leading-5 text-gray-600 min-h-[6.25rem]"
-title={p.description}
+className="mt-2 text-sm leading-5 text-gray-600 min-h-[6.25rem] max-h-[6.25rem] overflow-hidden"
 style={{
 display: "-webkit-box",
 WebkitLineClamp: 5,
 WebkitBoxOrient: "vertical",
-overflow: "hidden",
 }}
 >
 {p.description}
 </div>
+<button
+type="button"
+onClick={() => openDescription(p.title, p.description!)}
+className="mt-1 text-xs font-medium text-red-700 hover:text-red-800"
+>
+See full description
+</button>
+</>
 )}
 
 {p.beforeImage && p.afterImage && (
@@ -454,6 +471,27 @@ className="mx-auto h-auto max-w-none transition-transform duration-150"
 style={{ transform: `scale(${zoom})`, transformOrigin: "center top" }}
 />
 </div>
+</div>
+</div>
+)}
+
+{descriptionModal && (
+<div className="fixed inset-0 z-50 bg-black/60 p-4" onClick={closeDescription}>
+<div
+className="mx-auto mt-12 w-full max-w-2xl rounded-xl bg-white p-5 shadow-xl"
+onClick={(e) => e.stopPropagation()}
+>
+<div className="flex items-center justify-between">
+<h4 className="text-lg font-bold text-gray-900">{descriptionModal.title}</h4>
+<button
+type="button"
+onClick={closeDescription}
+className="rounded border border-gray-300 px-3 py-1 text-sm text-gray-700 hover:bg-gray-50"
+>
+Read less
+</button>
+</div>
+<p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-gray-700">{descriptionModal.text}</p>
 </div>
 </div>
 )}
